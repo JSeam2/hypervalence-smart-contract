@@ -1,6 +1,6 @@
 pragma solidity ^0.4.23;
 
-contract ArtistAuctionContract {
+contract AuctionContract {
   struct Auction {
     uint startTime;
     uint endTime;
@@ -11,11 +11,12 @@ contract ArtistAuctionContract {
 
   mapping (uint => Auction[]) public auctions;
 
-  function startAuction {
-    // Create an auction 
-  }
+//  function startAuction {
+//    // Create an auction 
+//  }
+//
+//  function bid {
+//
+//  }
 
-  function bid {
-
-  }
-
+}

@@ -1,0 +1,535 @@
+{
+  "contractName": "AuctionContract",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "auctions",
+      "outputs": [
+        {
+          "name": "startTime",
+          "type": "uint256"
+        },
+        {
+          "name": "endTime",
+          "type": "uint256"
+        },
+        {
+          "name": "highestBid",
+          "type": "uint256"
+        },
+        {
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "name": "winner",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b506101c3806100206000396000f300608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063fc23d5f014610046575b600080fd5b34801561005257600080fd5b5061007b6004803603810190808035906020019092919080359060200190929190505050610105565b604051808681526020018581526020018481526020018373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019550505050505060405180910390f35b60006020528160005260406000208181548110151561012057fe5b9060005260206000209060050201600091509150508060000154908060010154908060020154908060030160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050855600a165627a7a72305820f993a937ac2c544ed36d0762aca5c7adefa9671581b33ae36ff89be588d9a5380029",
+  "deployedBytecode": "0x608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063fc23d5f014610046575b600080fd5b34801561005257600080fd5b5061007b6004803603810190808035906020019092919080359060200190929190505050610105565b604051808681526020018581526020018481526020018373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019550505050505060405180910390f35b60006020528160005260406000208181548110151561012057fe5b9060005260206000209060050201600091509150508060000154908060010154908060020154908060030160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050855600a165627a7a72305820f993a937ac2c544ed36d0762aca5c7adefa9671581b33ae36ff89be588d9a5380029",
+  "sourceMap": "26:293:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:293:1;;;;;;;",
+  "deployedSourceMap": "26:293:1:-;;;;;;;;;;;;;;;;;;;;;;;;178:43;;8:9:-1;5:2;;;30:1;27;20:12;5:2;178:43:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.4.23;\n\ncontract AuctionContract {\n  struct Auction {\n    uint startTime;\n    uint endTime;\n    uint highestBid;\n    address owner;\n    address winner; \n  }\n\n  mapping (uint => Auction[]) public auctions;\n\n//  function startAuction {\n//    // Create an auction \n//  }\n//\n//  function bid {\n//\n//  }\n\n}\n",
+  "sourcePath": "/home/ada/WebApp/smackathon/contracts/Auction.sol",
+  "ast": {
+    "absolutePath": "/home/ada/WebApp/smackathon/contracts/Auction.sol",
+    "exportedSymbols": {
+      "AuctionContract": [
+        39
+      ]
+    },
+    "id": 40,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 22,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".23"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:1"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 39,
+        "linearizedBaseContracts": [
+          39
+        ],
+        "name": "AuctionContract",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "AuctionContract.Auction",
+            "id": 33,
+            "members": [
+              {
+                "constant": false,
+                "id": 24,
+                "name": "startTime",
+                "nodeType": "VariableDeclaration",
+                "scope": 33,
+                "src": "76:14:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 23,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "76:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 26,
+                "name": "endTime",
+                "nodeType": "VariableDeclaration",
+                "scope": 33,
+                "src": "96:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 25,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "96:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28,
+                "name": "highestBid",
+                "nodeType": "VariableDeclaration",
+                "scope": 33,
+                "src": "114:15:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 27,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "114:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 30,
+                "name": "owner",
+                "nodeType": "VariableDeclaration",
+                "scope": 33,
+                "src": "135:13:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 29,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "135:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 32,
+                "name": "winner",
+                "nodeType": "VariableDeclaration",
+                "scope": 33,
+                "src": "154:14:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 31,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "154:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Auction",
+            "nodeType": "StructDefinition",
+            "scope": 39,
+            "src": "55:119:1",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 38,
+            "name": "auctions",
+            "nodeType": "VariableDeclaration",
+            "scope": 39,
+            "src": "178:43:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Auction_$33_storage_$dyn_storage_$",
+              "typeString": "mapping(uint256 => struct AuctionContract.Auction[])"
+            },
+            "typeName": {
+              "id": 37,
+              "keyType": {
+                "id": 34,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "187:4:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "178:27:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Auction_$33_storage_$dyn_storage_$",
+                "typeString": "mapping(uint256 => struct AuctionContract.Auction[])"
+              },
+              "valueType": {
+                "baseType": {
+                  "contractScope": null,
+                  "id": 35,
+                  "name": "Auction",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 33,
+                  "src": "195:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Auction_$33_storage_ptr",
+                    "typeString": "struct AuctionContract.Auction"
+                  }
+                },
+                "id": 36,
+                "length": null,
+                "nodeType": "ArrayTypeName",
+                "src": "195:9:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_struct$_Auction_$33_storage_$dyn_storage_ptr",
+                  "typeString": "struct AuctionContract.Auction[]"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 40,
+        "src": "26:293:1"
+      }
+    ],
+    "src": "0:320:1"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/ada/WebApp/smackathon/contracts/Auction.sol",
+    "exportedSymbols": {
+      "AuctionContract": [
+        39
+      ]
+    },
+    "id": 40,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 22,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".23"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:1"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 39,
+        "linearizedBaseContracts": [
+          39
+        ],
+        "name": "AuctionContract",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "AuctionContract.Auction",
+            "id": 33,
+            "members": [
+              {
+                "constant": false,
+                "id": 24,
+                "name": "startTime",
+                "nodeType": "VariableDeclaration",
+                "scope": 33,
+                "src": "76:14:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 23,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "76:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 26,
+                "name": "endTime",
+                "nodeType": "VariableDeclaration",
+                "scope": 33,
+                "src": "96:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 25,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "96:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 28,
+                "name": "highestBid",
+                "nodeType": "VariableDeclaration",
+                "scope": 33,
+                "src": "114:15:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 27,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "114:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 30,
+                "name": "owner",
+                "nodeType": "VariableDeclaration",
+                "scope": 33,
+                "src": "135:13:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 29,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "135:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 32,
+                "name": "winner",
+                "nodeType": "VariableDeclaration",
+                "scope": 33,
+                "src": "154:14:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 31,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "154:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Auction",
+            "nodeType": "StructDefinition",
+            "scope": 39,
+            "src": "55:119:1",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 38,
+            "name": "auctions",
+            "nodeType": "VariableDeclaration",
+            "scope": 39,
+            "src": "178:43:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Auction_$33_storage_$dyn_storage_$",
+              "typeString": "mapping(uint256 => struct AuctionContract.Auction[])"
+            },
+            "typeName": {
+              "id": 37,
+              "keyType": {
+                "id": 34,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "187:4:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "178:27:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Auction_$33_storage_$dyn_storage_$",
+                "typeString": "mapping(uint256 => struct AuctionContract.Auction[])"
+              },
+              "valueType": {
+                "baseType": {
+                  "contractScope": null,
+                  "id": 35,
+                  "name": "Auction",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 33,
+                  "src": "195:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Auction_$33_storage_ptr",
+                    "typeString": "struct AuctionContract.Auction"
+                  }
+                },
+                "id": 36,
+                "length": null,
+                "nodeType": "ArrayTypeName",
+                "src": "195:9:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_struct$_Auction_$33_storage_$dyn_storage_ptr",
+                  "typeString": "struct AuctionContract.Auction[]"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 40,
+        "src": "26:293:1"
+      }
+    ],
+    "src": "0:320:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.23+commit.124ca40d.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.0",
+  "updatedAt": "2018-05-21T17:11:50.846Z"
+}
