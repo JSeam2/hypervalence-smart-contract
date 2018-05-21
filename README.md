@@ -17,13 +17,13 @@ If the token are to last forever, indicate true in the lastForever field. If las
 ## Tokens 
 1. Tokens are ERC-721 compliant and are tradeable
 2. The tokens possess the following information
-		uint tokenNumber
-		uint dateCreated
-		string description
-		uint startBlock
-		uint endBlock			// we use block to denote time to prevent miners from manipulating these fields
-		boolean lastForever
-		uint royaltyPercentage
+	uint tokenNumber
+	uint dateCreated
+	string description
+	uint startBlock
+	uint endBlock			// we use block to denote time to prevent miners from manipulating these fields
+	boolean lastForever
+	`uint royaltyPercentage
 		
 
 ## Auction
