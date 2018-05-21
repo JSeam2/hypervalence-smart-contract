@@ -22,7 +22,7 @@ If the token are to last forever, indicate true in the lastForever field. If las
     uint dateCreated
     string description
     uint startBlock
-    uint endBlock			// we use block to denote time to prevent miners from manipulating these fields
+    uint endBlock	// we use block to denote time to prevent miners from manipulating these fields
     boolean lastForever
     uint royaltyPercentage
 	```	
