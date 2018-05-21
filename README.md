@@ -39,26 +39,39 @@ We use truffle and [remix](https://remix.ethereum.org) for development.
 2. Install ganache. Check ganache official site for [instructions](http://truffleframework.com/ganache/)
 3. Ensure you are at the project directory 
 4. On a terminal run ganache on port 7545, the testrpc it should run on localhost:7545
+    ```
     $ ganache-cli -p 7545
+    ```
 5. Compile the contracts with truffle
+    ```
     $ truffle compile
+    ```
 6. Migrate or deploy using ganache
+    ```
     $ truffle migrate --network ganache 
+    ```
 7. Interfact with the contract
+    ```
     $ truffle console --network ganache
+    ```
 8. You may interface with the contracts like this eg.
+    ```
     truffle(ganache)> ArtistToken.deployed().then(inst => {token = inst;})
     truffle(ganache)> ArtistToken.<<method>>
+    ```
 9. To run tests, tests are found in ./test folder
+    ```
     $ truffle test
-        
+    ```        
 ## Using Remix IDE
 1. Using remix we can easily deploy the contracts with some web3 injector like metamask. 
 2. Goto [remix](https://remix.ethereum.org)
 3. We will need to connect remix to our local file system [see documentation](https://remix.readthedocs.io/en/latest/tutorial_connect_remix_with_your_filesystem/) using remixd
 4. Install remixd
 5. With remixd installed all we need to do is setup a websocket connection
+    ```
     $ remixd -s <absolute-path-to-the-shared-folder>
+    ```
 6. Click on the localhost connection icon and we should be connected to remix and you can develop off there.        
  
 
