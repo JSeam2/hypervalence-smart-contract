@@ -11,7 +11,6 @@ We create a curation market for artists and fans. Artists can create unique coll
 2. Artists can Auction tokens minted
 3. Artists can define in a description field what the tokens entitle fans to.
 4. Artists can define a royalty percentage fee between 0 and 100 that will be credited to the Artist upon future transactions. (This fee has default value at 5 or 5%)
-5. There is the option of burning tokens, suppose if the tokens are created errorneously, or should one wish to decrease supply of tokens.
 
 ## Tokens 
 1. Tokens are ERC-721 compliant and are tradeable

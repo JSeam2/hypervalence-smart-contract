@@ -1,4 +1,4 @@
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.21;
 
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721Basic.sol";
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721Receiver.sol";
@@ -85,6 +85,15 @@ contract ArtistToken is ERC721Basic {
     return ownedTokensCount[_owner];
   }
 
+  /**
+   * @dev Gets the total amount of tokens stored by the contract
+   * @return uint256 representing the total amount of tokens
+   */
+  function totalSupply() public view returns (uint256) {
+    return tokens.length;
+  }
+
+    
   /**
    * @dev Gets the owner of the specified token ID
    * @param _tokenId uint256 ID of the token to query the owner of
@@ -236,49 +245,52 @@ contract ArtistToken is ERC721Basic {
     return _spender == owner || getApproved(_tokenId) == _spender || isApprovedForAll(owner, _spender);
   }
 
+  /**
+   * @dev Internal function to mint a new token
+   * @dev Reverts if the given token ID already exists
+   * @param _to The address that will own the minted token
+   * @param _tokenId uint256 ID of the token to be minted by the msg.sender
+   */
+  function _mint(address _to, uint256 _tokenId) internal {
+    require(_to != address(0));
+    addTokenTo(_to, _tokenId);
+    emit Transfer(address(0), _to, _tokenId);
+  }
+    
+
   /// @dev Public function to mint a token, minted token will be credited to the creator
   /// @dev Reverts if royalty percentage > 100 or < 0
   function mint(string _name, 
                 string _description,
                 uint8 _royaltyPercentage) public {
 
-    require(_royaltyPercentage >= 0 && _royaltyPercentage <= 100);
+    require(_royaltyPercentage >= 0);
+    require(_royaltyPercentage <= 100);
+    
+    _tokenId = tokens.length;
+    
+    _mint(msg.sender, _tokenId);
 
     // add data
-    address _to = msg.sender;
     uint256 _timeCreated = now;
-    uint256 _artistTokenNumber = addrToArtistTokenNumber[_to];
+    uint256 _artistTokenNumber = addrToArtistTokenNumber[msg.sender];
     uint256 _tokenId = tokens.push(TokenData(_name,
                                             _description,
-                                            _to,
+                                            msg.sender,
                                             _artistTokenNumber,
                                             _timeCreated,
-                                            _royaltyPercentage)) - 1;
+                                            _royaltyPercentage)).sub(1);
 
     // update mappings
-    tokenOwner[_tokenId] = _to;
-    ownedTokensCount[_to] = ownedTokensCount[_to].add(1);
-    addrToArtistTokenNumber[_to] = addrToArtistTokenNumber[_to].add(1);
+    tokenOwner[_tokenId] = msg.sender;
+    ownedTokensCount[msg.sender] = ownedTokensCount[msg.sender].add(1);
+    addrToArtistTokenNumber[msg.sender] = addrToArtistTokenNumber[msg.sender].add(1);
     tokenToName[_tokenId] = _name;
     tokenToDescription[_tokenId] = _description;
-    tokenToArtistAddress[_tokenId] = _to;
+    tokenToArtistAddress[_tokenId] = msg.sender;
     tokenToArtistTokenNumber[_tokenId] = _artistTokenNumber;
     tokenToTimeCreated[_tokenId] = _timeCreated;
     tokenToRoyaltyPercentage[_tokenId] = _royaltyPercentage;
-
-
-    addTokenTo(_to, _tokenId);
-    emit Transfer(address(0), _to, _tokenId);
-  }
-
-  /// @dev Public function to burn a specific token belonging to owner
-  /// @dev reverts if the token does not exists
-  /// @dev reverts if the token does not belong to msg.sender
-  function burn(uint256 _tokenId) public {
-    address _owner = msg.sender;
-    clearApproval(_owner, _tokenId);
-    removeTokenFrom(_owner, _tokenId);
-    emit Transfer(_owner, address(0), _tokenId);
   }
 
   /**
