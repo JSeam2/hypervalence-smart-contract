@@ -6,13 +6,12 @@ We create a curation market for artists and fans. Artists can create unique coll
 
 
 # Features
-## Minting Tokens
+## Tokens Usage
 1. Artists can mint collectible tokens to raise funds
-2. Artists can sell the token on a crowdsale
+2. Artists can Auction tokens minted
 3. Artists can define in a description field what the tokens entitle fans to.
-4. Artists can define a startTime and endTime for the duration the tokens are valid.
-If the token are to last forever, indicate true in the lastForever field. If lastForever is true, value in startTime and endTime do not matter.
-5. Artists can define a royalty percentage fee between 0 and 100 that will be credited to the Artist upon future transactions. (This fee has default value at 5 or 5%)
+4. Artists can define a royalty percentage fee between 0 and 100 that will be credited to the Artist upon future transactions. (This fee has default value at 5 or 5%)
+5. There is the option of burning tokens, suppose if the tokens are created errorneously, or should one wish to decrease supply of tokens.
 
 ## Tokens 
 1. Tokens are ERC-721 compliant and are tradeable
@@ -71,6 +70,6 @@ We use truffle and [remix](https://remix.ethereum.org) for development.
     ```
     $ remixd -s <absolute-path-to-the-shared-folder>
     ```
-6. Click on the localhost connection icon and we should be connected to remix and you can develop off there.        
+6. Click on the localhost connection icon on the web ide and we should be connected to remix and you can develop off there.        
  
 
