@@ -1,6 +1,6 @@
 pragma solidity ^0.4.21;
 
-contract AuctionContract {
+contract AuctionContract is ArtistToken {
   struct Auction {
     uint startTime;
     uint endTime;
