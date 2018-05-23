@@ -51,14 +51,14 @@
     "absolutePath": "/home/ada/WebApp/smackathon/contracts/Auction.sol",
     "exportedSymbols": {
       "AuctionContract": [
-        762
+        558
       ]
     },
-    "id": 763,
+    "id": 559,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 745,
+        "id": 541,
         "literals": [
           "solidity",
           "^",
@@ -74,23 +74,23 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 762,
+        "id": 558,
         "linearizedBaseContracts": [
-          762
+          558
         ],
         "name": "AuctionContract",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "AuctionContract.Auction",
-            "id": 756,
+            "id": 552,
             "members": [
               {
                 "constant": false,
-                "id": 747,
+                "id": 543,
                 "name": "startTime",
                 "nodeType": "VariableDeclaration",
-                "scope": 756,
+                "scope": 552,
                 "src": "76:14:1",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -99,7 +99,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 746,
+                  "id": 542,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "76:4:1",
@@ -113,10 +113,10 @@
               },
               {
                 "constant": false,
-                "id": 749,
+                "id": 545,
                 "name": "endTime",
                 "nodeType": "VariableDeclaration",
-                "scope": 756,
+                "scope": 552,
                 "src": "96:12:1",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -125,7 +125,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 748,
+                  "id": 544,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "96:4:1",
@@ -139,10 +139,10 @@
               },
               {
                 "constant": false,
-                "id": 751,
+                "id": 547,
                 "name": "highestBid",
                 "nodeType": "VariableDeclaration",
-                "scope": 756,
+                "scope": 552,
                 "src": "114:15:1",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -151,7 +151,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 750,
+                  "id": 546,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "114:4:1",
@@ -165,10 +165,10 @@
               },
               {
                 "constant": false,
-                "id": 753,
+                "id": 549,
                 "name": "owner",
                 "nodeType": "VariableDeclaration",
-                "scope": 756,
+                "scope": 552,
                 "src": "135:13:1",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -177,7 +177,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 752,
+                  "id": 548,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "135:7:1",
@@ -191,10 +191,10 @@
               },
               {
                 "constant": false,
-                "id": 755,
+                "id": 551,
                 "name": "winner",
                 "nodeType": "VariableDeclaration",
-                "scope": 756,
+                "scope": 552,
                 "src": "154:14:1",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -203,7 +203,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 754,
+                  "id": 550,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "154:7:1",
@@ -218,27 +218,27 @@
             ],
             "name": "Auction",
             "nodeType": "StructDefinition",
-            "scope": 762,
+            "scope": 558,
             "src": "55:119:1",
             "visibility": "public"
           },
           {
             "constant": false,
-            "id": 761,
+            "id": 557,
             "name": "auctions",
             "nodeType": "VariableDeclaration",
-            "scope": 762,
+            "scope": 558,
             "src": "178:43:1",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Auction_$756_storage_$dyn_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Auction_$552_storage_$dyn_storage_$",
               "typeString": "mapping(uint256 => struct AuctionContract.Auction[])"
             },
             "typeName": {
-              "id": 760,
+              "id": 556,
               "keyType": {
-                "id": 757,
+                "id": 553,
                 "name": "uint",
                 "nodeType": "ElementaryTypeName",
                 "src": "187:4:1",
@@ -250,28 +250,28 @@
               "nodeType": "Mapping",
               "src": "178:27:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Auction_$756_storage_$dyn_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Auction_$552_storage_$dyn_storage_$",
                 "typeString": "mapping(uint256 => struct AuctionContract.Auction[])"
               },
               "valueType": {
                 "baseType": {
                   "contractScope": null,
-                  "id": 758,
+                  "id": 554,
                   "name": "Auction",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 756,
+                  "referencedDeclaration": 552,
                   "src": "195:7:1",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Auction_$756_storage_ptr",
+                    "typeIdentifier": "t_struct$_Auction_$552_storage_ptr",
                     "typeString": "struct AuctionContract.Auction"
                   }
                 },
-                "id": 759,
+                "id": 555,
                 "length": null,
                 "nodeType": "ArrayTypeName",
                 "src": "195:9:1",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_Auction_$756_storage_$dyn_storage_ptr",
+                  "typeIdentifier": "t_array$_t_struct$_Auction_$552_storage_$dyn_storage_ptr",
                   "typeString": "struct AuctionContract.Auction[]"
                 }
               }
@@ -280,7 +280,7 @@
             "visibility": "public"
           }
         ],
-        "scope": 763,
+        "scope": 559,
         "src": "26:293:1"
       }
     ],
@@ -290,14 +290,14 @@
     "absolutePath": "/home/ada/WebApp/smackathon/contracts/Auction.sol",
     "exportedSymbols": {
       "AuctionContract": [
-        762
+        558
       ]
     },
-    "id": 763,
+    "id": 559,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 745,
+        "id": 541,
         "literals": [
           "solidity",
           "^",
@@ -313,23 +313,23 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 762,
+        "id": 558,
         "linearizedBaseContracts": [
-          762
+          558
         ],
         "name": "AuctionContract",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "AuctionContract.Auction",
-            "id": 756,
+            "id": 552,
             "members": [
               {
                 "constant": false,
-                "id": 747,
+                "id": 543,
                 "name": "startTime",
                 "nodeType": "VariableDeclaration",
-                "scope": 756,
+                "scope": 552,
                 "src": "76:14:1",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -338,7 +338,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 746,
+                  "id": 542,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "76:4:1",
@@ -352,10 +352,10 @@
               },
               {
                 "constant": false,
-                "id": 749,
+                "id": 545,
                 "name": "endTime",
                 "nodeType": "VariableDeclaration",
-                "scope": 756,
+                "scope": 552,
                 "src": "96:12:1",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -364,7 +364,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 748,
+                  "id": 544,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "96:4:1",
@@ -378,10 +378,10 @@
               },
               {
                 "constant": false,
-                "id": 751,
+                "id": 547,
                 "name": "highestBid",
                 "nodeType": "VariableDeclaration",
-                "scope": 756,
+                "scope": 552,
                 "src": "114:15:1",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -390,7 +390,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 750,
+                  "id": 546,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "114:4:1",
@@ -404,10 +404,10 @@
               },
               {
                 "constant": false,
-                "id": 753,
+                "id": 549,
                 "name": "owner",
                 "nodeType": "VariableDeclaration",
-                "scope": 756,
+                "scope": 552,
                 "src": "135:13:1",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -416,7 +416,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 752,
+                  "id": 548,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "135:7:1",
@@ -430,10 +430,10 @@
               },
               {
                 "constant": false,
-                "id": 755,
+                "id": 551,
                 "name": "winner",
                 "nodeType": "VariableDeclaration",
-                "scope": 756,
+                "scope": 552,
                 "src": "154:14:1",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -442,7 +442,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 754,
+                  "id": 550,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "154:7:1",
@@ -457,27 +457,27 @@
             ],
             "name": "Auction",
             "nodeType": "StructDefinition",
-            "scope": 762,
+            "scope": 558,
             "src": "55:119:1",
             "visibility": "public"
           },
           {
             "constant": false,
-            "id": 761,
+            "id": 557,
             "name": "auctions",
             "nodeType": "VariableDeclaration",
-            "scope": 762,
+            "scope": 558,
             "src": "178:43:1",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Auction_$756_storage_$dyn_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Auction_$552_storage_$dyn_storage_$",
               "typeString": "mapping(uint256 => struct AuctionContract.Auction[])"
             },
             "typeName": {
-              "id": 760,
+              "id": 556,
               "keyType": {
-                "id": 757,
+                "id": 553,
                 "name": "uint",
                 "nodeType": "ElementaryTypeName",
                 "src": "187:4:1",
@@ -489,28 +489,28 @@
               "nodeType": "Mapping",
               "src": "178:27:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Auction_$756_storage_$dyn_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_struct$_Auction_$552_storage_$dyn_storage_$",
                 "typeString": "mapping(uint256 => struct AuctionContract.Auction[])"
               },
               "valueType": {
                 "baseType": {
                   "contractScope": null,
-                  "id": 758,
+                  "id": 554,
                   "name": "Auction",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 756,
+                  "referencedDeclaration": 552,
                   "src": "195:7:1",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Auction_$756_storage_ptr",
+                    "typeIdentifier": "t_struct$_Auction_$552_storage_ptr",
                     "typeString": "struct AuctionContract.Auction"
                   }
                 },
-                "id": 759,
+                "id": 555,
                 "length": null,
                 "nodeType": "ArrayTypeName",
                 "src": "195:9:1",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_Auction_$756_storage_$dyn_storage_ptr",
+                  "typeIdentifier": "t_array$_t_struct$_Auction_$552_storage_$dyn_storage_ptr",
                   "typeString": "struct AuctionContract.Auction[]"
                 }
               }
@@ -519,7 +519,7 @@
             "visibility": "public"
           }
         ],
-        "scope": 763,
+        "scope": 559,
         "src": "26:293:1"
       }
     ],
@@ -531,5 +531,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-05-22T17:40:01.319Z"
+  "updatedAt": "2018-05-23T17:18:26.551Z"
 }

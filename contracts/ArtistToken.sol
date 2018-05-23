@@ -1,18 +1,20 @@
 pragma solidity ^0.4.21;
 
-import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721Basic.sol";
+import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol";
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721BasicToken.sol";
 import "../node_modules/openzeppelin-solidity/contracts/AddressUtils.sol";
 import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
-contract ArtistToken is ERC721Basic, ERC721BasicToken {
-  
+contract ArtistToken is ERC721, ERC721BasicToken {
   using SafeMath for uint256;
   using AddressUtils for address;
 
-  // Equals to `bytes4(keccak256("onERC721Received(address,uint256,bytes)"))`
-  // which can be also obtained as `ERC721Receiver(0).onERC721Received.selector`
-  bytes4 constant ERC721_RECEIVED = 0xf0b9e5ba;
+  // Token name
+  string internal name_;
+
+  // Token symbol
+  string internal symbol_;  
+
 
   /// @notice struct that holds token data
   /// @param name the name of the token
@@ -38,7 +40,10 @@ contract ArtistToken is ERC721Basic, ERC721BasicToken {
   
   // Mapping from token ID to index of ower token list
   mapping (uint256 => uint256) internal ownedTokensIndex;
-  
+ 
+ // Array with all token ids, used for enumeration
+  uint256[] internal allTokens; 
+
   // Mapping from token id to position in the allTokens array
   mapping(uint256 => uint256) internal allTokensIndex;
 
@@ -52,6 +57,30 @@ contract ArtistToken is ERC721Basic, ERC721BasicToken {
   mapping (uint256 => uint256) public tokenToArtistTokenNumber; 
   mapping (uint256 => uint256) public tokenToTimeCreated;
   mapping (uint256 => uint8) public tokenToRoyaltyPercentage;
+
+	/**
+	* @dev Constructor function
+	**/
+	constructor(string _name, string _symbol) public {
+		name_ = _name;
+		symbol_ = _symbol;
+	}
+
+  /**
+   * @dev Gets the token name
+   * @return string representing the token name
+   */
+  function name() public view returns (string) {
+    return name_;
+  }
+
+  /**
+   * @dev Gets the token symbol
+   * @return string representing the token symbol
+   */
+  function symbol() public view returns (string) {
+    return symbol_;
+  }
 
   /**
    * @dev Gets the token ID at a given index of the tokens list of the requested owner
@@ -71,14 +100,25 @@ contract ArtistToken is ERC721Basic, ERC721BasicToken {
   function totalSupply() public view returns (uint256) {
     return tokens.length;
   }
-  
+
   /**
    * @dev Gets the token ID at a given index of all the tokens in this contract
    * @dev Reverts if the index is greater or equal to the total number of tokens
    * @param _index uint256 representing the index to be accessed of the tokens list
-   * @return data in tokenData struct
+   * @return uint256 token ID at the given index of the tokens list
    */
-  function tokenByIndex(uint256 _index) public view 
+  function tokenByIndex(uint256 _index) public view returns (uint256) {
+    require(_index < totalSupply());
+    return allTokens[_index];
+  }
+  
+  /**
+  * @dev Gets token data at a given index of all the tokens in this contract
+  * @dev Reverts if the index is greater or equal to the total number of tokens
+  * @param _index uint256 representing the index to be accessed of the tokens list
+  * @return data in tokenData struct
+  */
+  function tokenDataByIndex(uint256 _index) public view 
   returns (string, string, address, uint256, uint256, uint8) {
     require(_index < totalSupply());
     return (tokenToName[_index],
@@ -142,6 +182,7 @@ contract ArtistToken is ERC721Basic, ERC721BasicToken {
     uint256 _artistTokenNumber = addrToArtistTokenNumber[msg.sender];
     
     allTokensIndex[_tokenId] = tokens.length;
+    allTokens.push(_tokenId);
     
     uint256 _tokenId = tokens.push(TokenData(_name,
                                             _description,
@@ -173,10 +214,17 @@ contract ArtistToken is ERC721Basic, ERC721BasicToken {
     uint256 lastTokenIndex = tokens.length.sub(1);
     TokenData storage lastToken = tokens[lastTokenIndex];
     
+    uint256 tokenIndex_all = allTokensIndex[_tokenId];
+    uint256 lastTokenIndex_all = allTokens.length.sub(1);
+    uint256 lastToken_all = allTokens[lastTokenIndex];
 
     tokens[tokenIndex] = lastToken;
     delete tokens[lastTokenIndex];
     tokens.length--;
+
+    allTokens[tokenIndex_all] = lastToken_all;
+    allTokens[lastTokenIndex_all] = 0;
+    allTokens.length--;
     
     allTokensIndex[_tokenId] = 0;
     allTokensIndex[lastTokenIndex] = tokenIndex;
