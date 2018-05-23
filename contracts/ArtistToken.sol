@@ -1,11 +1,11 @@
 pragma solidity ^0.4.21;
 
-import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol";
+import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721Basic.sol";
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721BasicToken.sol";
 import "../node_modules/openzeppelin-solidity/contracts/AddressUtils.sol";
 import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
-contract ArtistToken is ERC721, ERC721BasicToken {
+contract ArtistToken is ERC721Basic, ERC721BasicToken {
   using SafeMath for uint256;
   using AddressUtils for address;
 
@@ -58,13 +58,13 @@ contract ArtistToken is ERC721, ERC721BasicToken {
   mapping (uint256 => uint256) public tokenToTimeCreated;
   mapping (uint256 => uint8) public tokenToRoyaltyPercentage;
 
-	/**
-	* @dev Constructor function
-	**/
-	constructor(string _name, string _symbol) public {
-		name_ = _name;
-		symbol_ = _symbol;
-	}
+  /**
+  * @dev Constructor function
+  */
+  constructor(string _name, string _symbol) public {
+	name_ = _name;
+    symbol_ = _symbol;
+  }
 
   /**
    * @dev Gets the token name
