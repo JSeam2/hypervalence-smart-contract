@@ -49,6 +49,9 @@ contract TokenAuction is ArtistToken {
   	uint256 price = auction.price;
 
   	delete tokenIdToAuction[_tokenId];
+
+  	seller.transfer(price);
+  	nonFungibleContract.transfer(msg.sender, _tokenId);
   }
 
   /**
