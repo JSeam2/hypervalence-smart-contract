@@ -57,7 +57,7 @@ contract TokenAuction is ArtistToken {
   /**
   * TODO
   */
-  funciton cancel(uint256 _tokenId) public {
+  function cancel(uint256 _tokenId) public {
   	Auction memory auction = tokenIdToAuction[_tokenId];
   	require(auction.seller == msg.sender);
 
