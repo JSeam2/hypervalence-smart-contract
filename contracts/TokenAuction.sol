@@ -2,7 +2,6 @@ pragma solidity ^0.4.21;
 
 import "./ERC721Basic.sol";
 import "./ArtistToken.sol";
-import "./AuctionBase.sol";
 
 contract TokenAuction is ArtistToken {
   
@@ -27,7 +26,7 @@ contract TokenAuction is ArtistToken {
 	ArtistStats[] public artistStats;
   
 
-  event AuctionCreated(uint256 tokenId, address artist, uint256 startingPrice, uint256 endingPrice, uint256 duration);
+  event AuctionCreated(uint256 tokenId, address artist, uint256 startingPrice, uint256 endingPrice);
   event AuctionSuccessful(uint256 tokenId, address artist, uint256 totalPrice, address winner);
   event AuctionCancelled(uint256 tokenId);
 
@@ -47,8 +46,8 @@ contract TokenAuction is ArtistToken {
     emit AuctionCreated(
       uint256(_tokenId),
       address(_auction.artist),
-      uint256(_auction.startingPrice),
-      uint256(_auction.endingPrice)
+      uint256(_auction.startPrice),
+      uint256(_auction.endPrice)
     );
   }
 
@@ -67,7 +66,7 @@ contract TokenAuction is ArtistToken {
   }
 
   function _bid(uint256 _tokenId, uint256 _bidAmount)
-    internal returns (int256) {
+    internal returns (uint256) {
 
     Auction storage auction = tokenIdToOpenAuction[_tokenId];
     require(_isOnAuction(auction));
@@ -77,7 +76,6 @@ contract TokenAuction is ArtistToken {
     address seller = auction.seller;
     address artist = auction.artist; 
     uint256 endPrice = _bidAmount;
-    uint256 startedAt = uint256(auction.startedAt);
     uint256 royaltyPercentage = uint256(auction.royaltyPercentage);
     _removeAuction(_tokenId);
 
@@ -87,12 +85,12 @@ contract TokenAuction is ArtistToken {
       seller.transfer(sellerProceeds);
       artist.transfer(artistCut);
 
-			stats.push(artist, endPrice, uint64(now));
+	  artistStats.push(ArtistStats(artist, endPrice, uint64(now)));
     }
     
     emit AuctionSuccessful(_tokenId, artist, endPrice, msg.sender);
 
-    return _bidAmount;
+    return endPrice;
     
   }
 
@@ -122,10 +120,10 @@ contract TokenAuction is ArtistToken {
 		_addAuction(_tokenId, auction);
   }
 
-	function bid(uint256 _tokenId) external payable {
+  function bid(uint256 _tokenId) external payable {
     _bid(_tokenId, msg.value);
     _transfer(msg.sender, _tokenId);
-	}
+  }
 
   function cancelAuction(uint256 _tokenId) public {
     Auction storage auction = tokenIdToOpenAuction[_tokenId];
@@ -141,22 +139,24 @@ contract TokenAuction is ArtistToken {
     returns
   (
     address seller,
+    address artist,
     uint256 startingPrice,
     uint256 endingPrice,
-    uint256 duration,
-    uint256 startedAt
+    uint256 startedAt,
+    uint256 royaltyPercentage
   ) {
     Auction storage auction = tokenIdToOpenAuction[_tokenId];
     require(_isOnAuction(auction));
     return (
       auction.seller,
-			auction.artist,
-      auction.startingPrice,
-      auction.endingPrice,
+	  auction.artist,
+      auction.startPrice,
+      auction.endPrice,
       auction.startedAt,
-			auction.royaltyPercentage
+	  auction.royaltyPercentage
     );
-	}
+      
+  }
     
   function getArtistStats(uint256 index)
     external
@@ -168,11 +168,10 @@ contract TokenAuction is ArtistToken {
     uint64 endTime
   ) {
     ArtistStats storage stats = artistStats[index];
-    require(_isOnAuction(auction));
     return (
-			auction.artist,
-      auction.endPrice,
-      auction.endTime
+	  stats.artist,
+      stats.endPrice,
+      stats.endTime
     );
-	}
+    }
 }
