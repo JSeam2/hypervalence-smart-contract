@@ -1,9 +1,9 @@
 pragma solidity ^0.4.21;
 
-import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721Basic.sol";
+import "./ERC721Basic.sol";
+import "./ArtistToken.sol";
 
 
-// references https://maksimivanov.com/posts/gradient-coin-tutorial-part-2/
 contract TokenAuction is ArtistToken {
 	ERC721Basic public nonFungibleContract;
 
@@ -30,8 +30,8 @@ contract TokenAuction is ArtistToken {
   function createAuction(uint256 _tokenId, uint256 price) public {
   	nonFungibleContract.takeOwnership(_tokenId);
   	Auction memory _auction = Auction({
-  		seller = msg.sender,
-  		price = uint256(price)
+  		seller: msg.sender,
+  		price: uint256(price)
   		});
 
   	tokenIdToAuction[_tokenId] = _auction;

@@ -1,28 +1,25 @@
 pragma solidity ^0.4.21;
 
-import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721Basic.sol";
-import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721BasicToken.sol";
-import "../node_modules/openzeppelin-solidity/contracts/AddressUtils.sol";
-import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "./ERC721.sol";
+import "./ERC721BasicToken.sol";
 
-contract ArtistToken is ERC721Basic, ERC721BasicToken {
+
+contract ArtistToken is ERC721, ERC721BasicToken {
   using SafeMath for uint256;
   using AddressUtils for address;
-
-  // Token name
-  string internal name_;
-
-  // Token symbol
-  string internal symbol_;  
 
 
   /// @notice struct that holds token data
   /// @param name the name of the token
-  /// @param description information about the token, you may indicate benefits the token confers and the time it is valid until.
+  /// @param description information about the token, you may indicate benefits 
+  ///   the token confers and the time it is valid until.
   /// @param artistAddress the address of the artist who created the token
-  /// @param artistTokenNumber the number of tokens created by the artist. eg 1st token, 2nd, ..., nth token
+  /// @param artistTokenNumber the number of tokens created by the artist. 
+  ///   eg 1st token, 2nd, ..., nth token
   /// @param timeCreated the block timestamp time where the token was created
-  /// @param royaltyPercentage the royalty percentage the artist receives from exchange of the token. This is specified by the artist.
+  /// @param royaltyPercentage the royalty percentage the artist receives from 
+  ///   exchange of the token. Fixed at 5%.
+                            
   
   struct TokenData {
     string name;
@@ -58,29 +55,6 @@ contract ArtistToken is ERC721Basic, ERC721BasicToken {
   mapping (uint256 => uint256) public tokenToTimeCreated;
   mapping (uint256 => uint8) public tokenToRoyaltyPercentage;
 
-  /**
-  * @dev Constructor function
-  */
-  constructor(string _name, string _symbol) public {
-	name_ = _name;
-    symbol_ = _symbol;
-  }
-
-  /**
-   * @dev Gets the token name
-   * @return string representing the token name
-   */
-  function name() public view returns (string) {
-    return name_;
-  }
-
-  /**
-   * @dev Gets the token symbol
-   * @return string representing the token symbol
-   */
-  function symbol() public view returns (string) {
-    return symbol_;
-  }
 
   /**
    * @dev Gets the token ID at a given index of the tokens list of the requested owner
@@ -166,14 +140,10 @@ contract ArtistToken is ERC721Basic, ERC721BasicToken {
 
   /**
    * @dev Public function to mint a token, minted token will be credited to the creator
-   * @dev Reverts if royalty percentage > 100 or < 0
+   * @dev Royalty Percentage is fixed at 5%
    */
   function mint(string _name, 
-                string _description,
-                uint8 _royaltyPercentage) public {
-
-    require(_royaltyPercentage >= 0);
-    require(_royaltyPercentage <= 100);
+                string _description) public {
 
     super._mint(msg.sender, tokens.length);
 
@@ -183,6 +153,9 @@ contract ArtistToken is ERC721Basic, ERC721BasicToken {
     
     allTokensIndex[_tokenId] = tokens.length;
     allTokens.push(_tokenId);
+    
+    // royalty percentage
+    uint8 _royaltyPercentage = 5;
     
     uint256 _tokenId = tokens.push(TokenData(_name,
                                             _description,
@@ -199,34 +172,5 @@ contract ArtistToken is ERC721Basic, ERC721BasicToken {
     tokenToArtistTokenNumber[_tokenId] = _artistTokenNumber;
     tokenToTimeCreated[_tokenId] = _timeCreated;
     tokenToRoyaltyPercentage[_tokenId] = _royaltyPercentage;
-  }
-
-  /**
-   * @dev Public function to burn a specific token
-   * @dev Reverts if the token does not exist
-   * @param _tokenId uint256 ID of the token being burned by the msg.sender
-   */
-  function burn(uint256 _tokenId) public {
-    super._burn(msg.sender, _tokenId);
-
-    // Reorg all tokens array
-    uint256 tokenIndex = allTokensIndex[_tokenId];
-    uint256 lastTokenIndex = tokens.length.sub(1);
-    TokenData storage lastToken = tokens[lastTokenIndex];
-    
-    uint256 tokenIndex_all = allTokensIndex[_tokenId];
-    uint256 lastTokenIndex_all = allTokens.length.sub(1);
-    uint256 lastToken_all = allTokens[lastTokenIndex];
-
-    tokens[tokenIndex] = lastToken;
-    delete tokens[lastTokenIndex];
-    tokens.length--;
-
-    allTokens[tokenIndex_all] = lastToken_all;
-    allTokens[lastTokenIndex_all] = 0;
-    allTokens.length--;
-    
-    allTokensIndex[_tokenId] = 0;
-    allTokensIndex[lastTokenIndex] = tokenIndex;
   }
 }
