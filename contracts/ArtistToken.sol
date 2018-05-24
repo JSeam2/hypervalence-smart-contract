@@ -141,6 +141,8 @@ contract ArtistToken is ERC721, ERC721BasicToken {
   /**
    * @dev Public function to mint a token, minted token will be credited to the creator
    * @dev Royalty Percentage is fixed at 5%
+   * @param _name name of token to be minted
+   * @param _description of token to be minted
    */
   function mint(string _name, 
                 string _description) public {
@@ -172,5 +174,24 @@ contract ArtistToken is ERC721, ERC721BasicToken {
     tokenToArtistTokenNumber[_tokenId] = _artistTokenNumber;
     tokenToTimeCreated[_tokenId] = _timeCreated;
     tokenToRoyaltyPercentage[_tokenId] = _royaltyPercentage;
+  }
+  
+  /**
+   * @dev Public function to batch mint a token with same _name and _description
+   * @dev Repeatedly calls mint
+   * @dev reverts if numToken <= 0 or numToken > 5
+   * @param _name name of token to be minted
+   * @param _description of token to be minted
+   * @param _numToken number of tokens to mint
+   */
+  function batchMint(string _name,
+                     string _description,
+                     uint8 _numToken) public {
+    require(_numToken <= 5);
+    require(_numToken > 0);
+    for(uint8 i = 0; i < _numToken; i++) {
+      mint(_name, _description);  
+    }
+                        
   }
 }
