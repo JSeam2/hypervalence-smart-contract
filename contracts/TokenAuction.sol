@@ -16,9 +16,9 @@ contract TokenAuction is ArtistToken {
   	address seller;
   	uint256 price;
 
-    uint startTime;
-    uint endTime;
-    uint highestBid;
+    // uint startTime;
+    // uint endTime;
+    // uint highestBid;
   }
 
   // Every auction to be associated with a tokenId
