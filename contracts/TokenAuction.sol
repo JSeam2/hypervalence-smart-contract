@@ -21,13 +21,13 @@ contract TokenAuction is ArtistToken {
 
   // escrow the NFT assigns ownership to contract
   function _escrow(address _owner, uint256 _tokenId) internal {
-    approve(this, _tokenId);
+    //approve(this, _tokenId);
     transferFrom(_owner, this, _tokenId);
   }
 
   // transfer NFT owned by contract to another address
   function _transfer(address _receiver, uint256 _tokenId) internal {
-    approve(_receiver, _tokenId);  
+    //approve(_receiver, _tokenId);  
     transferFrom(this, _receiver, _tokenId);
   }
 
@@ -83,12 +83,9 @@ contract TokenAuction is ArtistToken {
     uint256 _price
   ) public onlyOwnerOf(_tokenId) {
 
-    require(_price == uint256(uint128(_price)));
 
     _escrow(msg.sender, _tokenId);
-    // this is not accessed
     address _artist = getArtistAddress(_tokenId);
-    // this mapping is not accessed try round brackets
     uint8 _royaltyPercentage = getRoyaltyPercentage(_tokenId);
 
     Auction memory auction = Auction(
@@ -130,10 +127,10 @@ contract TokenAuction is ArtistToken {
     require(_isOnAuction(auction));
     return (
         auction.seller,
-      auction.artist,
+        auction.artist,
         auction.price,
         auction.startedAt,
-      auction.royaltyPercentage
+        auction.royaltyPercentage
     );
   }
 }

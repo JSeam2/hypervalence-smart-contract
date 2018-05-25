@@ -55,6 +55,13 @@ contract ArtistToken is ERC721, ERC721BasicToken {
   mapping (uint256 => uint256) public tokenToTimeCreated;
   mapping (uint256 => uint8) public tokenToRoyaltyPercentage;
 
+  function getArtistAddress(uint256 _tokenId) public view returns (address) {
+      return tokenToArtistAddress[_tokenId];
+  }
+  
+  function getRoyaltyPercentage(uint256 _tokenId) public view returns (uint8) {
+      return tokenToRoyaltyPercentage[_tokenId];
+  }
 
   /**
    * @dev Gets the token ID at a given index of the tokens list of the requested owner
@@ -72,7 +79,7 @@ contract ArtistToken is ERC721, ERC721BasicToken {
    * @return uint256 representing the total amount of tokens
    */
   function totalSupply() public view returns (uint256) {
-    return tokens.length;
+    return allTokens.length;
   }
 
   /**
@@ -153,7 +160,7 @@ contract ArtistToken is ERC721, ERC721BasicToken {
     uint256 _timeCreated = now;
     uint256 _artistTokenNumber = addrToArtistTokenNumber[msg.sender];
     
-    allTokensIndex[_tokenId] = tokens.length;
+    allTokensIndex[_tokenId] = allTokens.length;
     allTokens.push(_tokenId);
     
     // royalty percentage
