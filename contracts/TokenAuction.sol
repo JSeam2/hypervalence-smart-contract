@@ -16,7 +16,7 @@ contract TokenAuction is ArtistToken {
   mapping (uint256 => Auction) public tokenIdToAuction;
 
   event AuctionCreated(uint256 tokenId, address artist, uint256 price);
-  event AuctionSuccessful(uint256 tokenId, address artist, uint256 totalPrice, address winner);
+  event AuctionSuccessful(uint256 tokenId, address artist, uint256 price, address winner);
   event AuctionCancelled(uint256 tokenId);
 
   // escrow the NFT assigns ownership to contract
