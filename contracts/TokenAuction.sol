@@ -48,7 +48,7 @@ contract TokenAuction is ArtistToken {
                          uint256 _startPrice,
                          uint64 _duration) public onlyOwnerOf(_tokenId) {
     // require non-zero start price
-    require(_startPrice > 0);
+    require(_startPrice >= 100);
     // transfer token to this contract
     _escrow(msg.sender, _tokenId);
     
@@ -94,6 +94,7 @@ contract TokenAuction is ArtistToken {
     require(now <= auction.auctionClose);
     require(msg.value > auction.endPrice); 
 
+    // update mapping
     Auction memory _auction = Auction(
       auction.seller,
       auction.artist,
@@ -105,45 +106,27 @@ contract TokenAuction is ArtistToken {
       auction.royaltyPercentage
     );
 
-    // create mapping
     tokenIdToAuction[_tokenId] = _auction;
 
     emit AuctionBidIncreased(_tokenId, auction.artist, msg.sender, auction.startPrice, msg.value);
   }
 
-  function _bid(uint256 _tokenId, uint256 _bidAmount) internal {
+  function auctionClose(uint256 _tokenId) public {
     Auction storage auction = tokenIdToAuction[_tokenId];
+    require(now > auction.auctionClose);
     require(_isOnAuction(auction));
-    uint256 price = auction.price;
-    require(_bidAmount >= price);
-    // save values
-    address seller = auction.seller;
-    address artist = auction.artist; 
-    uint256 royaltyPercentage = uint256(auction.royaltyPercentage);
-    _removeAuction(_tokenId);
+    delete tokenIdToAuction[_tokenId];
 
-    if (price > 0) {
-      uint256 artistCut = price * royaltyPercentage/100; 
-      uint256 sellerProceeds = price - artistCut;
-      seller.transfer(sellerProceeds);
-      artist.transfer(artistCut);
-    }
-    
-    emit AuctionSuccessful(_tokenId, artist, _bidAmount, msg.sender);
-    
-  }
+    uint256 artistCut =  auction.endPrice * auction.royaltyPercentage/100;
+    uint256 sellerProceeds = auction.endPrice - artistCut;
 
-  function bid(uint256 _tokenId) external payable {
-    _bid(_tokenId, msg.value);
-    _transfer(msg.sender, _tokenId);
-  }
+    // transfer as accordingly
+    auction.seller.transfer(sellerProceeds);
+    auction.artist.transfer(artistCut);
+    _transfer(auction.topBidder, _tokenId);
 
-  function cancelAuction(uint256 _tokenId) public {
-    Auction storage auction = tokenIdToAuction[_tokenId];
-    require(_isOnAuction(auction));
-    address seller = auction.seller;
-    require(msg.sender == seller);
-    _cancelAuction(_tokenId, seller);
+    // annouce event
+    emit AuctionSuccessful(_tokenId, address auction.artist, uint256 auction.endPrice, address auction.topBidder);
   }
 
   function getOpenAuction(uint256 _tokenId)
@@ -153,7 +136,10 @@ contract TokenAuction is ArtistToken {
   (
     address,
     address,
+    address,
     uint256,
+    uint256,
+    uint64,
     uint64,
     uint8
   ) {
@@ -162,8 +148,11 @@ contract TokenAuction is ArtistToken {
     return (
         auction.seller,
         auction.artist,
-        auction.price,
-        auction.startedAt,
+        auction.topBidder,
+        auction.startPrice,
+        auction.endPrice,
+        auction.auctionStart
+        auction.auctionClose,
         auction.royaltyPercentage
     );
   }
