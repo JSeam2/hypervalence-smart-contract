@@ -76,8 +76,8 @@ contract TokenAuction is ArtistToken {
     address _artist = getArtistAddress(_tokenId);
     uint8 _royaltyPercentage = getRoyaltyPercentage(_tokenId);
     
-    uint64 _auctionStart = now;
-    uint64 _auctionEnd = now + duration;
+    uint64 _auctionStart = uint64(now);
+    uint64 _auctionEnd = _auctionStart + _duration;
 
     Auction memory _auction = Auction(
       msg.sender,
@@ -140,9 +140,13 @@ contract TokenAuction is ArtistToken {
     Auction storage auction = tokenIdToAuction[_tokenId];
     require(now > auction.auctionClose);
     require(_isOnAuction(auction));
+    
     // add to completedAuctions
     completedAuctions.push(auction);
     
+    // transfer token
+    _transfer(auction.topBidder, _tokenId);
+
     // delete auction
     delete tokenIdToAuction[_tokenId];
 
@@ -152,7 +156,6 @@ contract TokenAuction is ArtistToken {
     // transfer as accordingly
     auction.seller.transfer(sellerProceeds);
     auction.artist.transfer(artistCut);
-    _transfer(auction.topBidder, _tokenId);
 
     // announce event
     emit AuctionSuccessful(_tokenId, auction.artist, auction.endPrice, auction.topBidder);
