@@ -5,7 +5,7 @@ This repository possess the smart contract implementation of the project
 We create a curation market for artists and fans. Artists can create unique collectible tokens that they can sell on the market to raise funds. To incentivise sales of tokens, Artists can indicate in the descriptions what these tokens would entitle fans to. For example, backstage access, skype sessions. Fans who collect the tokens essentially possess a proof of support, allowing fans to claim OG fan status, verified on the blockchain. The tokens are tradeable, and the artist can define a royalty percentage fee that can be taxed on trades.  
 
 # Deployed @ Rinkeby Testnet
-[0x2aCDD7f0F06267664E452C1C66ED38B7dbad3187](https://rinkeby.etherscan.io/address/0x2acdd7f0f06267664e452c1c66ed38b7dbad3187)
+[Link](https://rinkeby.etherscan.io/address/0x57e8f6c1ef8a94ecb1d3d2bb454884d5399a8425)
 
 # Features
 ## Tokens Usage
