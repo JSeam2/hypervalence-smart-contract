@@ -20,6 +20,12 @@ contract TokenAuction is ArtistToken {
 
   // Completed auctions
   Auction[] public completedAuctions;
+  
+  // Auction value storage
+  mapping (uint256 => uint256) internal auctionStore;
+  
+  // Address value storage
+  mapping (address => uint256) internal pendingWithdraw;
 
   event AuctionCreated(uint256 tokenId, address artist, uint256 startPrice, uint64 auctionStart, uint64 auctionClose);
   event AuctionBidIncreased(uint256 tokenId, address artist, address bidder, uint256 startPrice, uint256 endPrice);
@@ -108,7 +114,15 @@ contract TokenAuction is ArtistToken {
     require(msg.sender == auction.seller);
     require(_isOnAuction(auction));
     require(auction.auctionClose >= now);
+    
+    // return token back to seller
     _transfer(auction.seller, _tokenId);
+    
+    // return funds back to top bidder
+    pendingWithdraw[auction.topBidder] += auctionStore[_tokenId];
+    
+    // delete mappings
+    delete auctionStore[_tokenId];
     delete tokenIdToAuction[_tokenId];
     emit AuctionCancelled(_tokenId);
   }
@@ -118,7 +132,13 @@ contract TokenAuction is ArtistToken {
     require(_isOnAuction(auction));
     require(now <= auction.auctionClose);
     require(msg.value > auction.endPrice); 
-
+    
+    // return money to previous top bidder
+    pendingWithdraw[auction.topBidder] += auctionStore[_tokenId];
+    
+    // update auctionStore
+    auctionStore[_tokenId] = msg.value;
+    
     // update mapping
     Auction memory _auction = Auction(
       auction.seller,
@@ -146,21 +166,32 @@ contract TokenAuction is ArtistToken {
     
     // transfer token
     _transfer(auction.topBidder, _tokenId);
+    
+    // calculate payout
+    uint256 amount = auctionStore[_tokenId];
+    uint256 artistCut =  amount * auction.royaltyPercentage/100;
+    uint256 sellerProceeds = amount - artistCut;
+
+    // transfer as accordingly
+    pendingWithdraw[auction.artist] += artistCut ;
+    pendingWithdraw[auction.seller] += sellerProceeds;
 
     // delete auction
     delete tokenIdToAuction[_tokenId];
 
-    uint256 artistCut =  auction.endPrice * auction.royaltyPercentage/100;
-    uint256 sellerProceeds = auction.endPrice - artistCut;
-
-    // transfer as accordingly
-    auction.seller.transfer(sellerProceeds);
-    auction.artist.transfer(artistCut);
+    // delete auctionStore mapping
+    delete auctionStore[_tokenId];
 
     // announce event
     emit AuctionSuccessful(_tokenId, auction.artist, auction.endPrice, auction.topBidder);
   }
-
+  
+  function withdraw() public {
+      uint256 amount = pendingWithdraw[msg.sender];
+      pendingWithdraw[msg.sender] = 0;
+      msg.sender.transfer(amount);
+  }
+  
   function getOpenAuction(uint256 _tokenId)
     public
     view
