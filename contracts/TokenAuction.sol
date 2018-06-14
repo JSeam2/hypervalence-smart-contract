@@ -1,8 +1,8 @@
 pragma solidity ^0.4.23;
 
-import "./ArtistToken.sol";
+import "./HypeToken.sol";
 
-contract TokenAuction is ArtistToken {
+contract TokenAuction is HypeToken {
   
   struct Auction {
     address seller;

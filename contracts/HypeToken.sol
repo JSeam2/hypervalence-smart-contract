@@ -4,7 +4,7 @@ import "./ERC721.sol";
 import "./ERC721BasicToken.sol";
 
 
-contract ArtistToken is ERC721, ERC721BasicToken {
+contract HypeToken is ERC721, ERC721BasicToken {
   using SafeMath for uint256;
   using AddressUtils for address;
 
