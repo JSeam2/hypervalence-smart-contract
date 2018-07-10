@@ -20,7 +20,20 @@ contract HypeToken is ERC721, ERC721BasicToken {
   /// @param royaltyPercentage the royalty percentage the artist receives from 
   ///   exchange of the token. Fixed at 5%.
                             
-  
+  /**
+   * @dev Struct to hold token data
+   * @param name This is the name of the ERC721 token as defined by the artist
+   * @param description This contains the description about the token. Artist may indicate benefits
+   *    conferred by the token. (e.g. Holder of the token is entitled to backstage access for life) 
+   * @param artistAddress Ethereum address of Artist, the account that minted the token is the artist
+   * @param artistTokenNumber Number of ERC721 tokens minted by an address
+   * @param artistRoyaltyPercentage Artist address gets a 5% commission from sale of token
+
+   * @param firstOwnerAddress Ethereum address of first person who owned the token
+   * @param firstOwnerRoyaltyPercentage First owner address gets a 2.5% commision from sale of token
+
+   * @param timeCreated Epoch time 
+   */  
   struct TokenData {
     string name;
     string description;
