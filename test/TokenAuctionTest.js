@@ -35,7 +35,7 @@ contract("TokenAuction", (accounts) => {
 	it("should start an auction and contract to act as escrow", () => {
 		return TokenAuction.deployed().then(instance => {
 			instance.mint("Test Token", "Test Description");
-			instance.createAuction(1, 1000);
+			instance.createAuction(1, 1000, 100);
 			return instance.ownerOf(1);
 		}).then(addr => {
 			assert.equal(addr, TokenAuction.address, "Owner of token after createAuction is not contract");
@@ -45,7 +45,7 @@ contract("TokenAuction", (accounts) => {
 	it("should be able to cancel an auction", () => {
 		return TokenAuction.deployed().then(instance => {
 			instance.mint("Test Token", "Test Description");
-			instance.createAuction(2, 1000);
+			instance.createAuction(2, 1000, 100);
 			instance.cancelAuction(2);
 			return instance.ownerOf(2);
 		}).then(addr => {
