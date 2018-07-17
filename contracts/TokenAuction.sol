@@ -220,7 +220,13 @@ contract TokenAuction is HypeToken {
     );
   }
   
-    function getCompletedAuction(uint256 index)
+  /**
+   * @dev get details of completed aucion
+   * @param _completedAuctionIndex refers to the n th number of
+   *    auction completed
+   *
+   */
+  function getCompletedAuction(uint256 _completedAuctionIndex)
     public
     view
     returns
@@ -234,7 +240,7 @@ contract TokenAuction is HypeToken {
     uint64,
     uint8
   ) {
-    Auction storage auction = completedAuctions[index];
+    Auction storage auction = completedAuctions[_completedAuctionIndex];
     return (
         auction.seller,
         auction.artist,

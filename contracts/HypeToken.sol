@@ -41,6 +41,7 @@ contract HypeToken is ERC721, ERC721BasicToken {
     uint256 artistTokenNumber;
     uint256 timeCreated;
     uint8 royaltyPercentage;
+    bool redeemed;
   }
 
   TokenData[] internal tokens;
@@ -67,6 +68,7 @@ contract HypeToken is ERC721, ERC721BasicToken {
   mapping (uint256 => uint256) public tokenToArtistTokenNumber; 
   mapping (uint256 => uint256) public tokenToTimeCreated;
   mapping (uint256 => uint8) public tokenToRoyaltyPercentage;
+  mapping (uint256 => bool) public tokenToRedeemed;
 
   function getArtistAddress(uint256 _tokenId) public view returns (address) {
       return tokenToArtistAddress[_tokenId];
@@ -113,14 +115,15 @@ contract HypeToken is ERC721, ERC721BasicToken {
   * @return data in tokenData struct
   */
   function tokenDataByIndex(uint256 _index) public view 
-  returns (string, string, address, uint256, uint256, uint8) {
+  returns (string, string, address, uint256, uint256, uint8, bool) {
     require(_index < totalSupply());
     return (tokenToName[_index],
             tokenToDescription[_index],
             tokenToArtistAddress[_index],
             tokenToArtistTokenNumber[_index],
             tokenToTimeCreated[_index],
-            tokenToRoyaltyPercentage[_index]);
+            tokenToRoyaltyPercentage[_index],
+            tokenToRedeemed[_index]);
   }
   
   /**
@@ -177,6 +180,7 @@ contract HypeToken is ERC721, ERC721BasicToken {
     allTokens.push(_tokenId);
     
     // royalty percentage
+    // use a fixed royalty percentage
     uint8 _royaltyPercentage = 5;
     
     uint256 _tokenId = tokens.push(TokenData(_name,
@@ -184,7 +188,9 @@ contract HypeToken is ERC721, ERC721BasicToken {
                                             msg.sender,
                                             _artistTokenNumber,
                                             _timeCreated,
-                                            _royaltyPercentage)).sub(1);
+                                            _royaltyPercentage,
+                                            false)).sub(1);
+
 
     // update mappings
     addrToArtistTokenNumber[msg.sender] = addrToArtistTokenNumber[msg.sender].add(1);
@@ -212,6 +218,32 @@ contract HypeToken is ERC721, ERC721BasicToken {
     for(uint8 i = 0; i < _numToken; i++) {
       mint(_name, _description);  
     }
-                        
+  }
+    
+    /**
+     * @dev Toggles token redeemed state
+     * @dev The artist address controls the redeem state
+     * @param _tokenId uint256 id of token
+     */ 
+  function toggleRedeem(uint256 _tokenId) public {
+  
+    require(msg.sender == tokenToArtistAddress[_tokenId]);
+    bool state;
+    if(tokenToRedeemed[_tokenId] == true) {
+        state = false;
+    } else {
+        state = true;
+    }
+    // update token address
+    tokenToRedeemed[_tokenId] = state;
+    
+    TokenData memory newData =  TokenData(tokenToName[_tokenId],
+                                          tokenToDescription[_tokenId],
+                                          tokenToArtistAddress[_tokenId],
+                                          tokenToArtistTokenNumber[_tokenId],
+                                          tokenToTimeCreated[_tokenId],
+                                          tokenToRoyaltyPercentage[_tokenId],
+                                          tokenToRedeemed[_tokenId]);
+    tokens[_tokenId] = newData;
   }
 }
