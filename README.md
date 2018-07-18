@@ -5,7 +5,9 @@ This repository possess the smart contract implementation of the project
 We create a curation market for artists and fans. Artists can create unique collectible tokens that they can sell on the market to raise funds. To incentivise sales of tokens, Artists can indicate in the descriptions what these tokens would entitle fans to. For example, backstage access, skype sessions. Fans who collect the tokens essentially possess a proof of support, allowing fans to claim OG fan status, verified on the blockchain. The tokens are tradeable, and the artist can define a royalty percentage fee that can be taxed on trades.  
 
 # Deployed @ Rinkeby Testnet
-[Link](https://rinkeby.etherscan.io/address/0x57e8f6c1ef8a94ecb1d3d2bb454884d5399a8425)
+Rinkeby Address: 0xd022efe5d8c7d8dab7f511fa82f172b67c3a9cd9
+
+[Link](https://rinkeby.etherscan.io/address/0xd022efe5d8c7d8dab7f511fa82f172b67c3a9cd9)
 
 # Features
 ## Tokens Usage
@@ -24,6 +26,7 @@ We create a curation market for artists and fans. Artists can create unique coll
     uint artistTokenNumber // nth token created by artist
     uint timeCreated
     uint royaltyPercentage // set at 5% for now 
+    bool redeemed // this is controlled by the artist
 	```	
 
 ## Token Sale Auction
@@ -48,16 +51,16 @@ We use truffle and [remix](https://remix.ethereum.org) for development.
     ```
 6. Migrate or deploy using ganache
     ```
-    $ truffle migrate --network ganache 
+    $ truffle migrate --network test 
     ```
 7. Interfact with the contract
     ```
-    $ truffle console --network ganache
+    $ truffle console --network test
     ```
 8. You may interface with the contracts like this eg.
     ```
-    truffle(ganache)> ArtistToken.deployed().then(inst => {token = inst;})
-    truffle(ganache)> ArtistToken.<<method>>
+    truffle(test)> TokenAuction.deployed().then(inst => {app = inst;})
+    truffle(test)> app.<<method>>
     ```
 9. To run tests, tests are found in ./test folder
     ```
