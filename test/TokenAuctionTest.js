@@ -34,8 +34,8 @@ contract("TokenAuction", (accounts) => {
 
       let initial = web3.eth.getBalance(accounts[1]).toString();
 
-      instance.bid(2, {value: 200000, from: accounts[1]});
-      instance.bid(2, {value: 300000, from: accounts[2]});
+      instance.bid(2, "0x0", {value: 200000, from: accounts[1]});
+      instance.bid(2, "0x0", {value: 300000, from: accounts[2]});
       
       instance.withdraw({from: accounts[1]});
       return [initial, web3.eth.getBalance(accounts[1]).toString()];
@@ -48,7 +48,7 @@ contract("TokenAuction", (accounts) => {
     return TokenAuction.deployed().then(instance => {
       instance.mint("Test Token", "Test Description");
       instance.createAuction(3, 1000, 3);
-      instance.bid(3, {value: 200000, from: accounts[1]});
+      instance.bid(3, "0x0", {value: 200000, from: accounts[1]});
 
       setTimeout(() => {
         instance.auctionClose(3).then(() => {
@@ -64,7 +64,7 @@ contract("TokenAuction", (accounts) => {
     return TokenAuction.deployed().then(instance => {
       instance.mint("Test Token", "Test Description");
       instance.createAuction(4, 1000, 3);
-      instance.bid(4, {value: 200000, from: accounts[1]});
+      instance.bid(4, "0x0", {value: 200000, from: accounts[1]});
 
       setTimeout(() => {
         instance.auctionClose(4).then(() => {
@@ -82,12 +82,12 @@ contract("TokenAuction", (accounts) => {
     return TokenAuction.deployed().then(instance => {
       instance.mint("Test Token", "Test Description");
       instance.createAuction(5, 1000, 3);
-      instance.bid(5, {value: 200000, from: accounts[1]});
+      instance.bid(5, "0x0", {value: 200000, from: accounts[1]});
 
       setTimeout(() => {
         instance.auctionClose(5).then(() => {
           instance.createAuction(5, 1000, 3, {from: accounts[1]});
-          instance.bid(5, {value: 200000, from: accounts[2]});
+          instance.bid(5, "0x0", {value: 200000, from: accounts[2]});
 
           setTimeout(() => {
             instance.auctionClose(5).then(() => {
