@@ -7,6 +7,7 @@ contract TokenAuction is HypeToken {
   struct Auction {
     address seller;
     address artist;
+    address promoter;
     address topBidder;
     uint256 startPrice;
     uint256 endPrice;
@@ -26,10 +27,14 @@ contract TokenAuction is HypeToken {
   
   // Address value storage
   mapping (address => uint256) internal pendingWithdraw;
+  
+  // Promo code storage
+  mapping (bytes32 => address) public promoCodeToPromoter;
+  mapping (address => bytes32) public promoterToPromoCode;
 
   event AuctionCreated(uint256 tokenId, address artist, uint256 startPrice, uint64 auctionStart, uint64 auctionClose);
-  event AuctionBidIncreased(uint256 tokenId, address artist, address bidder, uint256 startPrice, uint256 endPrice);
-  event AuctionSuccessful(uint256 tokenId, address artist, uint256 endPrice, address winner);
+  event AuctionBidIncreased(uint256 tokenId, address artist, address bidder, address promoter, uint256 startPrice, uint256 endPrice);
+  event AuctionSuccessful(uint256 tokenId, address artist, uint256 endPrice, address winner, address promoter);
   event AuctionCancelled(uint256 tokenId);
 
   // escrow the NFT assigns ownership to contract
@@ -43,7 +48,6 @@ contract TokenAuction is HypeToken {
     // transfer ownership
     super.addTokenTo(this, _tokenId);
     tokenOwner[_tokenId] = this;
-    ownedTokensCount[this] = ownedTokensCount[this].add(1);
     
     emit Transfer(_owner, this, _tokenId);
   }
@@ -59,7 +63,6 @@ contract TokenAuction is HypeToken {
     // transfer ownership
     addTokenTo(_receiver, _tokenId);
     tokenOwner[_tokenId] = _receiver;
-    ownedTokensCount[_receiver] = ownedTokensCount[_receiver].add(1);
     
     emit Transfer(this, _receiver, _tokenId);
   }
@@ -85,10 +88,15 @@ contract TokenAuction is HypeToken {
     uint64 _auctionStart = uint64(now);
     uint64 _auctionEnd = _auctionStart + _duration;
 
+    // set msg.sender as topBidder initially. 
+    // Incase no one bids, token is returned to creator of auction
+    // set msg.sender as promoter initially. So if no one promotes
+    // creator of auction will get full cut
     Auction memory _auction = Auction(
       msg.sender,
       _artist,
-      msg.sender,
+      msg.sender, // msg.sender is promoter initially
+      msg.sender, // msg.sender is topBidder initally. Token will return back to auction crao
       _startPrice,
       _startPrice,
       _auctionStart,
@@ -126,23 +134,46 @@ contract TokenAuction is HypeToken {
     delete tokenIdToAuction[_tokenId];
     emit AuctionCancelled(_tokenId);
   }
+  
+  /**
+   * @dev Register as a promoter
+   * @dev use a mapping instead of filling address directly during bid
+   *      to prevent people from losing eth
+   * @dev This can potentially be a payable function *to discuss*
+   */
+  function becomePromoter() public returns(bytes32) {
+    // hash sender's eth address
+    bytes32 _promoCode = keccak256(abi.encodePacked(msg.sender));
+    promoCodeToPromoter[_promoCode] = msg.sender;
+    promoterToPromoCode[msg.sender] = _promoCode;
+    
+    return _promoCode;
+  }
 
-  function bid(uint256 _tokenId) public payable {
+  function bid(uint256 _tokenId, bytes32 _promoCode) public payable {
     Auction storage auction = tokenIdToAuction[_tokenId];
     require(_isOnAuction(auction));
     require(now <= auction.auctionClose);
-    require(msg.value > auction.endPrice); 
-    
+    require(msg.value > auction.endPrice);
+
     // return money to previous top bidder
     pendingWithdraw[auction.topBidder] += auctionStore[_tokenId];
     
     // update auctionStore
     auctionStore[_tokenId] = msg.value;
     
+    // get promoter addr via hash
+    address _promoter = promoCodeToPromoter[_promoCode];
+    // if no valid promo code is used _promoter goes back to auction.seller 
+    if(_promoter == address(0)){
+        _promoter = auction.seller;
+    }
+    
     // update mapping
     Auction memory _auction = Auction(
       auction.seller,
       auction.artist,
+      _promoter,
       msg.sender,
       auction.startPrice,
       msg.value,
@@ -153,7 +184,12 @@ contract TokenAuction is HypeToken {
 
     tokenIdToAuction[_tokenId] = _auction;
 
-    emit AuctionBidIncreased(_tokenId, auction.artist, msg.sender, auction.startPrice, msg.value);
+    emit AuctionBidIncreased(_tokenId, 
+                             auction.artist, 
+                             msg.sender,
+                             _promoter,
+                             auction.startPrice, 
+                             msg.value);
   }
 
   function auctionClose(uint256 _tokenId) public {
@@ -170,10 +206,12 @@ contract TokenAuction is HypeToken {
     // calculate payout
     uint256 amount = auctionStore[_tokenId];
     uint256 artistCut =  amount * auction.royaltyPercentage/100;
-    uint256 sellerProceeds = amount - artistCut;
+    uint256 promoterCut = amount * auction.royaltyPercentage/100;
+    uint256 sellerProceeds = amount - artistCut - promoterCut;
 
     // transfer as accordingly
     pendingWithdraw[auction.artist] += artistCut ;
+    pendingWithdraw[auction.promoter] += promoterCut;
     pendingWithdraw[auction.seller] += sellerProceeds;
 
     // delete auction
@@ -183,7 +221,11 @@ contract TokenAuction is HypeToken {
     delete auctionStore[_tokenId];
 
     // announce event
-    emit AuctionSuccessful(_tokenId, auction.artist, auction.endPrice, auction.topBidder);
+    emit AuctionSuccessful(_tokenId, 
+                            auction.artist, 
+                            auction.endPrice, 
+                            auction.topBidder,
+                            auction.promoter);
   }
   
   function withdraw() public {
@@ -200,6 +242,7 @@ contract TokenAuction is HypeToken {
     address,
     address,
     address,
+    address,
     uint256,
     uint256,
     uint64,
@@ -211,6 +254,7 @@ contract TokenAuction is HypeToken {
     return (
         auction.seller,
         auction.artist,
+        auction.promoter,
         auction.topBidder,
         auction.startPrice,
         auction.endPrice,
@@ -234,6 +278,7 @@ contract TokenAuction is HypeToken {
     address,
     address,
     address,
+    address,
     uint256,
     uint256,
     uint64,
@@ -244,6 +289,7 @@ contract TokenAuction is HypeToken {
     return (
         auction.seller,
         auction.artist,
+        auction.promoter,
         auction.topBidder,
         auction.startPrice,
         auction.endPrice,
