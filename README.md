@@ -76,6 +76,21 @@ We use truffle and [remix](https://remix.ethereum.org) for development.
     $ remixd -s <absolute-path-to-the-shared-folder>
     ```
 6. Click on the localhost connection icon on the web ide and we should be connected to remix and you can develop off there.        
+
+## Using geth
+1. Create an account on geth
+```
+// you will be prompted a pass phrase remember this.
+$ geth account new
+
+// check new accounts this should show a directory of the keystore you will need it for step 2
+$ geth account list 
+```
+
+2. Run geth
+```
+$ geth --rinkeby --rpc --rpcapi db,eth,net,web3,personal --password /dir/to/keystore 
+```
  
 # References
 This repository uses code and creates derivative work from [open-zeppelin](https://github.com/OpenZeppelin/openzeppelin-solidity). The license is provided below [link](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/LICENSE) 
