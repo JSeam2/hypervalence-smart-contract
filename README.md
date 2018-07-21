@@ -89,7 +89,9 @@ $ geth account list
 
 2. Run geth
 ```
-$ geth --rinkeby --rpc --rpcapi db,eth,net,web3,personal --unlock <ETH ADDRESS> 
+$ geth --rinkeby --rpc --rpcapi db,eth,net,web3,personal --unlock <ETH ADDRESS>  --datadir path/to/keystore/file
+
+// note if you had used geth account import previously, you should find a keystore file within /home/<usrname>/.ethereum/keystore. You should also see a folder /.ethereum/rinkeby now. You should copy the keystore file into /.ethereum/rinkeby/keystore if you expereince key not found error 
 ```
 
 3. Do the following truffle commands
