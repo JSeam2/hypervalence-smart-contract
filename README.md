@@ -90,6 +90,7 @@ $ geth account list
 2. Run geth
 ```
 $ geth --rinkeby --rpc --rpcapi db,eth,net,web3,personal --unlock <ETH ADDRESS>  --datadir path/to/keystore/file
+$ geth --unlock="0x0d604c28a2a7c199c7705859c3f88a71cce2acb7" --targetgaslimit "7563273" --rinkeby --rpc -rpcapi eth,net,web3,personal
 
 // note if you had used geth account import previously, you should find a keystore file within /home/<usrname>/.ethereum/keystore. You should also see a folder /.ethereum/rinkeby now. You should copy the keystore file into /.ethereum/rinkeby/keystore if you expereince key not found error 
 ```
