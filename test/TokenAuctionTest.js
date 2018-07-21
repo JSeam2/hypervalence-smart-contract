@@ -46,12 +46,11 @@ contract("TokenAuction", (accounts) => {
 
   it("should receive token if winner", () => {
     return TokenAuction.deployed().then(instance => {
-      instance.mint("Test Token", "Test Description");
-      instance.createAuction(3, 1000, 3);
+      instance.mint("Test Token", "Test Description"); instance.createAuction(3, 1000, 3);
       instance.bid(3, "0x0", {value: 200000, from: accounts[1]});
 
       setTimeout(() => {
-        instance.auctionClose(3).then(() => {
+        instance.closeAuction(3).then(() => {
           return instance.ownerOf(3);
         }).then((addr) => {
             assert.equal(addr, accounts[1], "Auction winner does not have token");
@@ -67,7 +66,7 @@ contract("TokenAuction", (accounts) => {
       instance.bid(4, "0x0", {value: 200000, from: accounts[1]});
 
       setTimeout(() => {
-        instance.auctionClose(4).then(() => {
+        instance.closeAuction(4).then(() => {
           instance.createAuction(4, 1000, 3, {from: accounts[1]});
           instance.cancelAuction(4);
           return instance.ownerOf(4);
@@ -85,12 +84,12 @@ contract("TokenAuction", (accounts) => {
       instance.bid(5, "0x0", {value: 200000, from: accounts[1]});
 
       setTimeout(() => {
-        instance.auctionClose(5).then(() => {
+        instance.closeAuction(5).then(() => {
           instance.createAuction(5, 1000, 3, {from: accounts[1]});
           instance.bid(5, "0x0", {value: 200000, from: accounts[2]});
 
           setTimeout(() => {
-            instance.auctionClose(5).then(() => {
+            instance.closeAuction(5).then(() => {
               let initial = web3.eth.getBalance(accounts[0]).toString();
               return initial;
             }).then(initial => {

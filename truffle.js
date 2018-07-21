@@ -7,6 +7,7 @@ module.exports = {
       port: 7545,
       network_id: "*" // match any network id
     },
+
     testnet: {
       host: "127.0.0.1",
       port: 8545,

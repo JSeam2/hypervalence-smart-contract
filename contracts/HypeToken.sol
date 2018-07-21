@@ -161,6 +161,10 @@ contract HypeToken is ERC721, ERC721BasicToken {
     ownedTokensIndex[lastToken] = tokenIndex;
   }
 
+  function getOwnedTokens(address _owner) public view returns (uint256[]) {
+    return ownedTokens[_owner];
+  }
+
   /**
    * @dev Public function to mint a token, minted token will be credited to the creator
    * @dev Royalty Percentage is fixed at 5%

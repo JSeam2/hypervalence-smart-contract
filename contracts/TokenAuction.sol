@@ -192,7 +192,7 @@ contract TokenAuction is HypeToken {
                              msg.value);
   }
 
-  function auctionClose(uint256 _tokenId) public {
+  function closeAuction(uint256 _tokenId) public {
     Auction storage auction = tokenIdToAuction[_tokenId];
     require(now > auction.auctionClose);
     require(_isOnAuction(auction));
