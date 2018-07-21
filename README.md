@@ -5,9 +5,9 @@ This repository possess the smart contract implementation of the project
 We create a curation market for artists and fans. Artists can create unique collectible tokens that they can sell on the market to raise funds. To incentivise sales of tokens, Artists can indicate in the descriptions what these tokens would entitle fans to. For example, backstage access, skype sessions. Fans who collect the tokens essentially possess a proof of support, allowing fans to claim OG fan status, verified on the blockchain. The tokens are tradeable, and the artist can define a royalty percentage fee that can be taxed on trades.  
 
 # Deployed @ Rinkeby Testnet
-Rinkeby Address: 0xd022efe5d8c7d8dab7f511fa82f172b67c3a9cd9
+Rinkeby Address: 0xe3e3f13f4266f0b0bb9c37bfc6ed25b3a7b2e884
 
-[Link](https://rinkeby.etherscan.io/address/0xd022efe5d8c7d8dab7f511fa82f172b67c3a9cd9)
+[Link](https://rinkeby.etherscan.io/address/0xe3e3f13f4266f0b0bb9c37bfc6ed25b3a7b2e884)
 
 # Features
 ## Tokens Usage
@@ -78,18 +78,24 @@ We use truffle and [remix](https://remix.ethereum.org) for development.
 6. Click on the localhost connection icon on the web ide and we should be connected to remix and you can develop off there.        
 
 ## Using geth
-1. Create an account on geth
+1. Create a new account on metamask and export the private key. Do the following.
 ```
 // you will be prompted a pass phrase remember this.
-$ geth account new
+$ geth account import <private key location>
 
-// check new accounts this should show a directory of the keystore you will need it for step 2
+// check new accounts this should show a the list of accounts created
 $ geth account list 
 ```
 
 2. Run geth
 ```
-$ geth --rinkeby --rpc --rpcapi db,eth,net,web3,personal --password /dir/to/keystore 
+$ geth --rinkeby --rpc --rpcapi db,eth,net,web3,personal --unlock <ETH ADDRESS> 
+```
+
+3. Do the following truffle commands
+```
+$ truffle compile
+$ truffle migrate --network rinkeby
 ```
  
 # References
