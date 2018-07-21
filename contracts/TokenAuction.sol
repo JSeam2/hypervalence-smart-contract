@@ -23,7 +23,7 @@ contract TokenAuction is HypeToken {
   Auction[] public completedAuctions;
   
   // Auction value storage
-  mapping (uint256 => uint256) internal auctionStore;
+  mapping (uint256 => uint256) internal auctionStore
   
   // Address value storage
   mapping (address => uint256) internal pendingWithdraw;
@@ -226,6 +226,11 @@ contract TokenAuction is HypeToken {
                             auction.endPrice, 
                             auction.topBidder,
                             auction.promoter);
+  }
+  
+  function getWithdraw(address _to) public view returns (uint256) {
+    uint256 amount = pendingWithdraw[_to];
+    return amount;
   }
   
   function withdraw() public {
