@@ -191,7 +191,7 @@ contract HypeToken is ERC721, ERC721BasicToken {
     allTokens.push(_tokenId);
 
     // Keep track of tokens minted
-    mintedTokens[msg.sender].push(_tokenId); 
+    mintedTokens[msg.sender].push(allTokens.length - 1); 
     
     // royalty percentage
     // use a fixed royalty percentage
