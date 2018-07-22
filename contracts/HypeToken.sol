@@ -48,6 +48,9 @@ contract HypeToken is ERC721, ERC721BasicToken {
 
   // Mapping from owner to list of owned token ID
   mapping (address => uint256[]) internal ownedTokens;
+
+  // Mapping from token minter to list of minted token ID
+  mapping (address => uint256[]) internal mintedTokens;
   
   // Mapping from token ID to index of ower token list
   mapping (uint256 => uint256) internal ownedTokensIndex;
@@ -165,6 +168,10 @@ contract HypeToken is ERC721, ERC721BasicToken {
     return ownedTokens[_owner];
   }
 
+  function getMintedTokens(address _minter) public view returns (uint256[]) {
+    return mintedTokens[_minter];
+  }
+
   /**
    * @dev Public function to mint a token, minted token will be credited to the creator
    * @dev Royalty Percentage is fixed at 5%
@@ -182,6 +189,9 @@ contract HypeToken is ERC721, ERC721BasicToken {
     
     allTokensIndex[_tokenId] = allTokens.length;
     allTokens.push(_tokenId);
+
+    // Keep track of tokens minted
+    mintedTokens[msg.sender].push(_tokenId); 
     
     // royalty percentage
     // use a fixed royalty percentage
