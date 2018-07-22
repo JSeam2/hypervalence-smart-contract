@@ -23,7 +23,7 @@ contract TokenAuction is HypeToken {
   Auction[] public completedAuctions;
   
   // Auction value storage
-  mapping (uint256 => uint256) internal auctionStore
+  mapping (uint256 => uint256) internal auctionStore;
   
   // Address value storage
   mapping (address => uint256) internal pendingWithdraw;
